@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShelfWeb", "ShelfWeb\ShelfWeb.csproj", "{022C5156-B131-4F3B-9D73-EDBEBEDCF537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resposity", "Resposity\Resposity.csproj", "{A35D2612-3BFA-4657-BA42-E4178F0E3D13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{BBA7F688-FDEB-4065-99BD-597F14272C74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{649F594A-3A54-4714-B817-D4771DFD132C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{022C5156-B131-4F3B-9D73-EDBEBEDCF537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{022C5156-B131-4F3B-9D73-EDBEBEDCF537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{022C5156-B131-4F3B-9D73-EDBEBEDCF537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{022C5156-B131-4F3B-9D73-EDBEBEDCF537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A35D2612-3BFA-4657-BA42-E4178F0E3D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A35D2612-3BFA-4657-BA42-E4178F0E3D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A35D2612-3BFA-4657-BA42-E4178F0E3D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A35D2612-3BFA-4657-BA42-E4178F0E3D13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA7F688-FDEB-4065-99BD-597F14272C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA7F688-FDEB-4065-99BD-597F14272C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA7F688-FDEB-4065-99BD-597F14272C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA7F688-FDEB-4065-99BD-597F14272C74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{649F594A-3A54-4714-B817-D4771DFD132C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{649F594A-3A54-4714-B817-D4771DFD132C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{649F594A-3A54-4714-B817-D4771DFD132C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{649F594A-3A54-4714-B817-D4771DFD132C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://pc-201611170925:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ShelfWeb\\ShelfWeb.csproj
+		SccProjectName1 = ShelfWeb
+		SccLocalPath1 = ShelfWeb
+		SccProjectUniqueName2 = Resposity\\Resposity.csproj
+		SccProjectName2 = Resposity
+		SccLocalPath2 = Resposity
+		SccProjectUniqueName3 = Service\\Service.csproj
+		SccProjectName3 = Service
+		SccLocalPath3 = Service
+		SccProjectUniqueName4 = Common\\Common.csproj
+		SccProjectName4 = Common
+		SccLocalPath4 = Common
+	EndGlobalSection
+EndGlobal

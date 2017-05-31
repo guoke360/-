@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = "ScheduleList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Table.css" rel="stylesheet" />
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-share"></i> 安装进度管理</a></li>
+</ol>
+<div id="page-inner">
+<div class="row">
+    <div class="col-md-12">
+        <table border="0" class="search">
+            <thead>
+                <tr>
+                    <td  class="searchName">货架类型:</td>
+                    <td class="company_searchinput"><input data-bind="value:SCName" type="text" /></td>
+                    <td class="searchName">公司名称:</td>
+                    <td class="company_searchinput"><input  data-bind="value:SCRName" type="text" /></td>
+                    <td class="searchButton"colspan="6">
+                        <button type="submit" id="searchbutton" data-bind="click:Search" class="btn btn-danger">查询</button>
+                    </td>
+                </tr>
+                
+            </thead>
+        </table>
+    </div>
+</div>
+</div>
+<div id="page-inners">
+    <div class="row">
+        <div class="col-md-12">
+            @*列表*@ <table border="1" style="margin-top:24px;margin-left:5%;width:90%;border:1px solid #aeadad">
+    <thead class="tableFirst">
+        <tr class="theadtr">
+            <td rowspan="2">编号</td>
+            <td rowspan="2">货架类型</td>
+            <td rowspan="2">设计吨位</td>
+            <td rowspan="2">安装价格</td>
+            <td rowspan="2">安装地点</td>
+            <td rowspan="2">开工日期</td>
+            <td rowspan="2">安装周期</td>
+            <td colspan="4">货架结构</td>
+            <td rowspan="2">报价</td>
+            <td rowspan="2">公司名称</td>
+            <td rowspan="2">查看详细</td>
+        </tr>
+        <tr  class="theadtr">
+            <td>立柱高度</td>
+            <td>横梁层高</td>
+            <td>阁楼层数</td>
+            <td>货叉伸拉</td>
+        </tr>
+    </thead>
+                       <tbody style="text-align:center" data-bind="foreach: people">
+                           <tr class="tbodytr">
+                               <td data-bind="text:OfferID">
+                                   1
+                               </td>
+                               <td data-bind="text:InsShelftype">
+                                   钢平台
+                               </td>
+                               <td data-bind="text:InsTonnage">
+                                   15吨
+                               </td>
+                               <td data-bind="text:InsMoney">125元/吨</td>
+                               <td data-bind="text:Insplace">江苏南京</td>
+                               <td data-bind="text:StepStartTimes">2016-05-25</td>
+                               <td data-bind="text:InsCycle">20人*天</td>
+                               <td data-bind="text:InsHeight">12米</td>
+                               <td data-bind="text:InsBeamHgh">2米</td>
+                               <td data-bind="text:InsAtticLayer">8层</td>
+                               <td data-bind="text:InsForkExtension">6米</td>
+                               <td data-bind="text:OfferMoney">100元/吨</td>
+                               <td data-bind="text:CompanyName">江苏斯诺物联</td>
+                               <td><a id="tablebutton" data-bind="attr:{href:look}" class="btn btn-danger">查看</a></td>
+                           </tr>
+          
+                       </tbody>
+        <tr class="tableEnd" style="text-align:center;height:30px;">
+            <td colspan="14">
+                <ul class="pagination" style="text-align: right">
+                    <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                        <a href="javascript:void" data-bind="click: pagingf">首页</a>
+                    </li>
+                    <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                        <a href="javascript:void" data-bind="click: pagingup">上一页</a>
+                    </li>
+                    <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingnext">下一页</a></li>
+                    <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingl">末页</a></li>
+                    <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                        <a href="javascript:void">
+                            <!--ko text:NowPage -->
+                            <!--/ko-->
+                            /<!--ko text:AllPage --><!--/ko-->页
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    
+</table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+
+        var viewModel = {
+            //json主体数据集合
+            people: ko.observableArray(@Html.Raw(Model.list)),
+            //分页
+            AllPage: ko.observable(@Model.AllPage),
+            NowPage: ko.observable(@Model.NowPage),
+            SCRName: ko.observable(""),
+            SCName: ko.observable(""),
+            pagingup: function () {
+                var NowPageN = viewModel.NowPage() - 1;
+                if (NowPageN <= 0) {
+                    NowPageN = 0;
+                }
+                $.post("@Url.Action("ScheduleSearch")", {
+                    NowPage: NowPageN, SCName: this.SCName, SCRName: this.SCRName,
+
+                }, function (data) {
+                    viewModel.updateUser(data);
+                });
+            },
+            pagingf: function () {
+                $.post("@Url.Action("ScheduleSearch")", { NowPage: 1, SCName: this.SCName, SCRName: this.SCRName }, function (data) {
+                    viewModel.updateUser(data);
+                });
+            },
+            pagingl: function () {
+                $.post("@Url.Action("ScheduleSearch")", {
+                    NowPage: viewModel.AllPage() == 0 ? 0 : viewModel.AllPage(), SCName: this.SCName, SCRName: this.SCRName
+                }, function (data) {
+                    viewModel.updateUser(data);
+                });
+            },
+            updateUser: function (data) {
+                viewModel.people(data.ScheduleList);
+                viewModel.NowPage(data.NowPage);
+                viewModel.AllPage(data.AllPage);
+            },
+            Search: function () {
+                $.post("@Url.Action("ScheduleSearch")", { SCName: this.SCName, SCRName: this.SCRName }, function (data) {
+                    viewModel.updateUser(data);
+
+                })
+                },
+            detial: function (people) {
+
+                //location.href = "Scheduledetial?OfferID=" + people.OfferID;
+            },
+            pagingnext: function () {
+                var NowPageN = viewModel.NowPage() + 1;
+                if (NowPageN > viewModel.AllPage()) {
+                    NowPageN = NowPageN - 1;
+                }
+                $.post("@Url.Action("ScheduleSearch")", {
+                    NowPage: NowPageN, SCName: this.SCName, SCRName: this.SCRName,
+                }, function (data) {
+                    viewModel.updateUser(data);
+                });
+            }
+        }
+        ko.applyBindings(viewModel);
+    })
+</script>

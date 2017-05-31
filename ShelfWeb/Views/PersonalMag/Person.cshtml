@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Person";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Person.css" rel="stylesheet" />
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Person","PersonalMag", new { area = (String)null })"><i class="fa fa-share"></i> 个人管理</a></li>
+</ol>
+<div id="page-inners">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="all">
+                <table>
+                    <tr>
+                        <td class="tdname">原密码：</td>
+                        <td class="tdinput">
+                            <div class="inputstyle">
+                                <input type="password" class="form-control" name="OldPassword" data-bind="value:OldPassword" maxlength="12" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdname">新密码：</td>
+                        <td class="tdinput">
+                            <div class="inputstyle">
+                                <input type="password" class="form-control" name="UserPassword" data-bind="value:UserPassword" maxlength="12" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdname">新密码确认：</td>
+                        <td class="tdinput">
+                            <div class="inputstyle">
+                                <input type="password" class="form-control" name="SurePassword" data-bind="value:SurePassword" maxlength="12" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="trstyle">
+                        <td colspan="2">
+                            <div class="submitstyle">
+                                <input type="submit" value="确认" class="btn btn-danger" data-bind="click:Sure">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            OldPassword: ko.observable(""),
+            UserPassword: ko.observable(""),
+            SurePassword: ko.observable(""),
+            Sure: function () {
+                $.post("@Url.Action("Person")", {
+                    OldPassword: this.OldPassword, UserPassword: this.UserPassword, SurePassword: this.SurePassword
+                }, function (data) {
+                    if (data.msg == "密码修改成功！") {
+                        alert(data.msg);
+                        window.location.href = "@Url.Action("Login", "Login")";
+                    }
+                    else {
+                        viewModel.OldPassword("");
+                        viewModel.UserPassword("");
+                        viewModel.SurePassword("");
+                        alert(data.msg);
+                    }
+                });
+            }
+        }
+        ko.applyBindings(viewModel);
+    });
+</script> 

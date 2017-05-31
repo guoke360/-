@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "RequireRelease";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<link href="~/Content/smd.css" rel="stylesheet" />
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-share"></i> 安装需求管理</a></li>
+    > 需求发布
+</ol>
+<div id="page-inners">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="page-head-line">基本信息</div>
+                <div>
+                    <table class="table">
+                        <tr>
+                            <td class="td" style="line-height:35px;">货架类型</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" data-bind="value:InsShelftype"/></td>
+                            <td class="td" style="line-height:35px;">设计吨位</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" data-bind="value:InsTonnage"/>
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" data-bind="value:InsTonUnit">
+                                    <option value="吨">吨</option>
+                                    <option value="千克">千克</option>
+                                </select>
+                            </td>
+                            <td class="td" style="line-height:35px;">安装地点</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" data-bind="value:Insplace"/></td>
+                        </tr>
+                        <tr>
+                            <td class="td" style="line-height:35px;">开工日期</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" data-bind="value:InsStartDate" id="time"/></td>
+                            <td class="td" style="line-height:35px;">安装周期</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" data-bind="value:InsCycle"/>
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" data-bind="value:InsCycleUnit">
+                                    <option value="人*天">人*天</option>
+                                    <option value="人*周">人*周</option>
+                                </select>
+                            </td>
+                            <td class="td" style="line-height:35px;">立柱高度</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" data-bind="value:InsHeight"/>
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" data-bind="value:InsHghUnit">
+                                    <option value="米">米</option>
+                                    <option value="千米">千米</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td" style="line-height:35px;">横梁高度</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" data-bind="value:InsBeamHgh"/>
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" data-bind="value:InsStyHghUnit">
+                                    <option value="米">米</option>
+                                    <option value="千米">千米</option>
+                                </select>
+                            </td>
+                            <td class="td" style="line-height:35px;">阁楼层数</td>
+                            <td class="tds"><input class="form-control" style="width: 72%;float:left" data-bind="value:InsAtticLayer"/><label style="float:left;font-weight:normal;line-height:35px;margin-left:5px;">层</label></td>
+                            <td class="td" style="line-height:35px;">货叉伸位</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" data-bind="value:InsForkExtension"/>
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" data-bind="value:InsStretchCom">
+                                    <option value="米">米</option>
+                                    <option value="千米">千米</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td" style="line-height:35px;">安装价格</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" data-bind="value:InsMoney"/>
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" data-bind="value:InsMoneyCom">
+                                    <option value="元/吨">元/吨</option>
+                                    <option value="元/千克">元/千克</option>
+                                </select>
+                            </td>
+                            <td class="td" style="line-height:35px;">联系人</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" data-bind="value:InsName"/></td>
+                            <td class="td" style="line-height:35px;">手机</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" data-bind="value:InsPhone"/></td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td" style="line-height:35px;">备注</td>
+                            <td colspan="5"><input class="form-control" style="width:965px;height:100px;" data-bind="value:Remark"/></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="button">
+                    <button type="submit" class="btn btn-danger" data-bind="click:RequiresRelease">需求发布</button>
+                    <a href="@Url.Action("RequireList","RequireMag", new { area = (String)null })" class="btn btn-default">取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            $('#time').datetimepicker({
+                minView: "month", //选择日期后，不会再跳转去选择时分秒
+                format: "yyyy-mm-dd", //选择日期后，文本框显示的日期格式
+                language: 'zh-CN', //汉化
+                autoclose: true, //选择日期后自动关闭
+                todayBtn: true//今日按钮
+            });
+        });
+    </script>
+}
+
+<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            InsShelftype: ko.observable(""),
+            InsTonnage: ko.observable(""),
+            InsTonUnit: ko.observable(""),
+            Insplace: ko.observable(""),
+            InsStartDate: ko.observable(""),
+            InsCycle: ko.observable(""),
+            InsCycleUnit: ko.observable(""),
+            InsHeight: ko.observable(""),
+            InsHghUnit: ko.observable(""),
+            InsBeamHgh: ko.observable(""),
+            InsStyHghUnit: ko.observable(""),
+            InsAtticLayer: ko.observable(""),
+            InsForkExtension: ko.observable(""),
+            InsStretchCom: ko.observable(""),
+            InsMoney: ko.observable(""),
+            InsMoneyCom: ko.observable(""),
+            InsName: ko.observable(""),
+            InsPhone: ko.observable(""),
+            Remark: ko.observable(""),
+            RequiresRelease: function () {
+                viewModel.InsStartDate($("#time").val());
+                $.post("@Url.Action("RequiresRelease")", {
+                    InsShelftype: this.InsShelftype, InsTonnage: this.InsTonnage, InsTonUnit: this.InsTonUnit,
+                    Insplace: this.Insplace, InsStartDate: this.InsStartDate, InsCycle: this.InsCycle,
+                    InsCycleUnit: this.InsCycleUnit, InsHeight: this.InsHeight, InsHghUnit: this.InsHghUnit,
+                    InsBeamHgh: this.InsBeamHgh, InsStyHghUnit: this.InsStyHghUnit, InsAtticLayer: this.InsAtticLayer,
+                    InsForkExtension: this.InsForkExtension, InsStretchCom: this.InsStretchCom, InsMoney: this.InsMoney,
+                    InsMoneyCom: this.InsMoneyCom, InsName: this.InsName, InsPhone: this.InsPhone, Remark: this.Remark
+                }, function (data) {
+                    if (data.msg == "提交成功")
+                    {
+                        alert(data.msg);
+                        window.location.href = data.url;;
+                    }
+                    else
+                    {
+                        alert(data.msg)
+                    }
+                });
+            }
+        }
+        ko.applyBindings(viewModel);
+    });
+</script> 

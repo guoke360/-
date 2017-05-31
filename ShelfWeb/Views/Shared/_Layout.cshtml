@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>货架安装平台</title>
+    @Scripts.Render("~/bundles/share")
+    @Styles.Render("~/Content/share")
+    @RenderSection("scripts", required: false)
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body class="skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index2.html" class="logo"> <span class="logo-mini"><b>S</b>IN</span> <span class="logo-lg"><b>Shelf</b> Installation</span> </a>
+            <nav class="navbar navbar-static-top">
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <span class="sr-only">Toggle navigation</span> </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li><a href="@Url.Action("Login","Login", new { area = (String)null })">注销</a> </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <ul class="sidebar-menu">
+                    @if (ShelfWeb.Filter.UserInfo.UserLevel.Contains("安装公司管理"))
+                    {
+                        <li><a href="@Url.Action("CompanyList","CompanyMag", new { area = (String)null })"><i class="fa fa-files-o"></i> <span>安装公司管理</span></a></li>
+                    }
+                    <li class="treeview">
+                        @if (ShelfWeb.Filter.UserInfo.UserLevel.Contains("安装需求管理"))
+                        {
+                            <a href="#"><i class="fa fa-book"></i> <span>安装需求管理</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>
+                        }
+                        <ul class="treeview-menu">
+                            @if (ShelfWeb.Filter.UserInfo.UserLevel.Contains("安装需求发布"))
+                            {
+                                <li class="active"><a href="@Url.Action("RequireRelease", "RequireMag", new { area = (String)null })"><i class="fa fa-circle-o"></i> 安装需求发布</a></li>
+                            }
+                            @if (ShelfWeb.Filter.UserInfo.UserLevel.Contains("安装需求管理"))
+                            {
+                                <li><a href="@Url.Action("RequireList", "RequireMag", new { area = (String)null })"><i class="fa fa-circle-o"></i> 安装需求管理</a></li>
+                            }
+                        </ul>
+                    </li>
+                    @if (ShelfWeb.Filter.UserInfo.UserLevel.Contains("安装进度管理"))
+                    {
+                        <li><a href="@Url.Action("ScheduleList", "ScheduleMag", new { area = (String)null })"><i class="fa fa-calendar"></i> <span>安装进度管理</span></a></li>
+                    }
+                    <li><a href="@Url.Action("Person","PersonalMag", new { area = (String)null })"><i class="fa fa-edit"></i> <span>个人管理</span></a></li>
+                    @if (ShelfWeb.Filter.UserInfo.UserLevel.Contains("系统管理"))
+                    {
+                        <li><a href="@Url.Action("SystemList","SystemMag", new { area = (String)null })"><i class="fa fa-th"></i> <span>系统管理</span></a></li>
+                    }
+                </ul>
+            </section>
+        </aside>
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

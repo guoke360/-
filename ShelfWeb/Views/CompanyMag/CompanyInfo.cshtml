@@ -1,0 +1,341 @@
+﻿
+@{
+    ViewBag.Title = "CompanyInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Table.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap-grid.min.css" rel="stylesheet" />
+<link href="~/Content/dist/zoomify.min.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<script src="~/Content/dist/zoomify.min.js"></script>
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<ol class="breadcrumb">
+    <li><a href="~/CompanyMag/CompanyList"><i class="fa fa-share"></i> 安装公司管理</a>查看详细</li>
+</ol>
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h6 class="page-head-line">
+                公司信息
+            </h6>
+            <table border="0" class="com-info">
+                <thead>
+                    <tr>
+                        <td class="com-td6" data-bind="text:UserID" style="display:none;"></td>
+                        <td class="com-td">
+                            公司名称：
+                        </td>
+                        <td class="com-td6" data-bind="text:CompanyName"></td>
+                        <td class="com-td5">
+                            联系人：
+                        </td>
+                        <td class="com-td2" data-bind="text:UserRealName"></td>
+                        <td class="com-td">
+                            联系电话：
+                        </td>
+                        <td class="com-td1" data-bind="text:UserPhone"></td>
+                        <td class="com-td">
+                            认证状态：
+                        </td>
+                        <td class="com-td1" data-bind="text:CompanyStates"></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="page-inner1" style="width: 97%;height:80px;margin:auto;background-color: #fff!important;margin-top:30px;">
+    <div class="row">
+        <div class="col-md-12">
+            <h6 class="page-head-line">
+                信用评分
+            </h6>
+            <table border="0" class="com-info">
+                <thead>
+                    <tr>
+                        <td class="com-td3">
+                            客户满意度：
+                        </td>
+                        <td class="com-td2"><span style="color:red" data-bind="text:EvalSatisfied"></span></td>
+                        <td class="com-td3">
+                            质量合格率：
+                        </td>
+                        <td class="com-td2"><span style="color:red" data-bind="text:EvalQuality"></span></td>
+                        <td class="com-td3">
+                            交期达成率：
+                        </td>
+                        <td class="com-td2"><span style="color:red" data-bind="text:EvalReachRate"></span></td>
+                        <td class="com-td3">
+                            安全状况：
+                        </td>
+                        <td class="com-td2"><span style="color:red" data-bind="text:EvalAccident"></span></td>
+                        <td class="com-td4">
+                            现场管理规范：
+                        </td>
+                        <td class="com-td2"><span style="color:red" data-bind="text:EvalManagement"></span></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="page-inners">
+    <div class="row">
+        <div class="col-md-12">
+            <h6 class="page-head-line">
+                安装资质
+            </h6>
+            <table class="com-info" border="0">
+                <tr>
+                    <td class="com-td7">
+                        营业执照
+                    </td>
+                    <td class="example col-xs-3 col-md-3">
+                        <p><img class="img-rounded" data-bind="attr:{src:CompanyLicense}" /></p>
+                    </td>
+                    <td class="com-td9">
+                        <input type="button" class="btn btn-default" data-bind="click:LicenseDel" value="删除">
+                        <a class="btn btn-default" data-bind="attr:{href:CompanyLicense}" download="营业执照">下载</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="com-td7">
+                        安装资质
+                    </td>
+                    <td class="example col-xs-3 col-md-3">
+                        <p><img class="img-rounded" data-bind="attr:{src:CompanyQualification}" /></p>
+                    </td>
+                    <td class="com-td9">
+                        <input type="button" class="btn btn-default" data-bind="click:QualificationDel" value="删除">
+                        <a class="btn btn-default" data-bind="attr:{href:CompanyQualification}" download="安装资质">下载</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="com-td7">
+                        登高证
+                    </td>
+                    <td class="example col-xs-3 col-md-3">
+                        <p><img class="img-rounded" data-bind="attr:{src:CompanyClimbCard}" /></p>
+                    </td>
+                    <td class="com-td9">
+                        <input type="button" class="btn btn-default" data-bind="click:ClimbCardDel" value="删除">
+                        <a class="btn btn-default" data-bind="attr:{href:CompanyClimbCard}" download="登高证">下载</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="com-td7">
+                        焊工证
+                    </td>
+                    <td class="example col-xs-3 col-md-3">
+                        <p><img class="img-rounded" data-bind="attr:{src:CompanyWelderCard}" /></p>
+                    </td>
+                    <td class="com-td9">
+                        <input type="button" class="btn btn-default" data-bind="click:WelderCardDel" value="删除">
+                        <a class="btn btn-default" data-bind="attr:{href:CompanyWelderCard}" download="焊工证">下载</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="com-td7">
+                        叉车证
+                    </td>
+                    <td class="example col-xs-3 col-md-3">
+                        <p><img class="img-rounded" data-bind="attr:{src:CompanyForkliftCard}" /></p>
+                    </td>
+                    <td class="com-td9">
+                        <input type="button" class="btn btn-default" data-bind="click:ForkliftCardDel" value="删除">
+                        <a class="btn btn-default" data-bind="attr:{href:CompanyForkliftCard}" download="叉车证">下载</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="com-td7">
+                        电工证
+                    </td>
+                    <td class="example col-xs-3 col-md-3">
+                        <p><img class="img-rounded" data-bind="attr:{src:CompanyElectricianCard}" /></p>
+                    </td>
+                    <td class="com-td9">
+                        <input type="button" class="btn btn-default" data-bind="click:ElectricianCardDel" value="删除">
+                        <a class="btn btn-default" data-bind="attr:{href:CompanyElectricianCard}" download="电工证">下载</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="com-td7">
+                        安全员工作证
+                    </td>
+                    <td class="example col-xs-3 col-md-3">
+                        <p><img class="img-rounded" data-bind="attr:{src:CompanySafeCard}" /></p>
+                    </td>
+                    <td class="com-td9">
+                        <input type="button" class="btn btn-default" data-bind="click:SafeCardDel" value="删除">
+                        <a class="btn btn-default" data-bind="attr:{href:CompanySafeCard}" download="安全员工作证">下载</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="com-td7">
+                        保险证明
+                    </td>
+                    <td class="example col-xs-3 col-md-3">
+                        <p><img class="img-rounded" data-bind="attr:{src:CompanyInsuranceCard}" /></p>
+                    </td>
+                    <td class="com-td9">
+                        <input type="button" class="btn btn-default" data-bind="click:InsuranceCardDel" value="删除">
+                        <a class="btn btn-default" data-bind="attr:{href:CompanyInsuranceCard}" download="保险证明">下载</a>
+                    </td>
+                </tr>
+            </table>
+            <div id="button" style="float:right;margin-right:30px;margin-top:20px;margin-bottom:20px;">
+                <input type="button" class="btn btn-danger" value="认证通过" data-bind="click:Pass">
+                <input type="button" class="btn btn-danger" value="认证失败" data-bind="click:NoPass">
+            </div>
+            <a class="btn btn-default" href="@Url.Action("CompanyList","CompanyMag", new { area = (String)null })" style="float:right;margin-right:30px;margin-top:20px;margin-bottom:20px;">返回</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.example img').zoomify();
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            UserID: ko.observable("@Model.UserID"),
+            CompanyName: ko.observable("@Model.CompanyName"),
+            UserRealName: ko.observable("@Model.UserRealName"),
+            UserPhone: ko.observable("@Model.UserPhone"),
+            CompanyStates: ko.observable("@Model.CompanyStates"),
+
+            EvalSatisfied: ko.observable("@Model.EvalSatisfied"),
+            EvalQuality: ko.observable("@Model.EvalQuality"),
+            EvalReachRate: ko.observable("@Model.EvalReachRate"),
+            EvalAccident: ko.observable("@Model.EvalAccident"),
+            EvalManagement: ko.observable("@Model.EvalManagement"),
+
+            CompanyLicense: ko.observable("@Model.CompanyLicense"),
+            CompanyQualification: ko.observable("@Model.CompanyQualification"),
+            CompanyClimbCard: ko.observable("@Model.CompanyClimbCard"),
+            CompanyWelderCard: ko.observable("@Model.CompanyWelderCard"),
+            CompanyForkliftCard: ko.observable("@Model.CompanyForkliftCard"),
+            CompanyElectricianCard: ko.observable("@Model.CompanyElectricianCard"),
+            CompanySafeCard: ko.observable("@Model.CompanySafeCard"),
+            CompanyInsuranceCard: ko.observable("@Model.CompanyInsuranceCard"),
+
+            updateCompany: function (data) {
+                viewModel.UserID(data.UserID);
+                viewModel.CompanyName(data.CompanyName);
+                viewModel.UserRealName(data.UserRealName);
+                viewModel.UserPhone(data.UserPhone);
+                viewModel.CompanyStates(data.CompanyStates);
+
+                viewModel.EvalSatisfied(data.EvalSatisfied);
+                viewModel.EvalQuality(data.EvalQuality);
+                viewModel.EvalReachRate(data.EvalReachRate);
+                viewModel.EvalAccident(data.EvalAccident);
+                viewModel.EvalManagement(data.EvalManagement);
+
+                viewModel.CompanyClimbCard(data.CompanyClimbCard);
+                viewModel.CompanyLicense(data.CompanyLicense);
+                viewModel.CompanyQualification(data.CompanyQualification);
+                viewModel.CompanyWelderCard(data.CompanyWelderCard);
+                viewModel.CompanyForkliftCard(data.CompanyForkliftCard);
+                viewModel.CompanyElectricianCard(data.CompanyElectricianCard);
+                viewModel.CompanySafeCard(data.CompanySafeCard);
+                viewModel.CompanyInsuranceCard(data.CompanyInsuranceCard);
+                alert(data.msg);
+            },
+
+            LicenseDel: function () {
+                $.post("@Url.Action("Delete")", {
+                    CompanyLicense: "@Model.CompanyLicense", UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                })
+            },
+
+            QualificationDel: function () {
+                $.post("@Url.Action("Delete")", {
+                    CompanyQualification: "@Model.CompanyQualification", UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+
+            ClimbCardDel: function () {
+                $.post("@Url.Action("Delete")", {
+                    CompanyClimbCard: "@Model.CompanyClimbCard", UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+
+            WelderCardDel: function () {
+                $.post("@Url.Action("Delete")", {
+                    CompanyWelderCard: "@Model.CompanyWelderCard", UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+
+            ForkliftCardDel: function () {
+                $.post("@Url.Action("Delete")", {
+                    CompanyForkliftCard: "@Model.CompanyForkliftCard", UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+
+            ElectricianCardDel: function () {
+                $.post("@Url.Action("Delete")", {
+                    CompanyElectricianCard: "@Model.CompanyElectricianCard", UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+
+            SafeCardDel: function () {
+                $.post("@Url.Action("Delete")", {
+                    CompanySafeCard: "@Model.CompanySafeCard", UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+
+            InsuranceCardDel: function () {
+                $.post("@Url.Action("Delete")", {
+                    CompanyInsuranceCard: "@Model.CompanyInsuranceCard",UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+
+            Pass: function () {
+                $.post("@Url.Action("Pass")", {
+                    State:"Pass",UserID:"@Model.UserID"
+                },function(data)
+                {
+                    viewModel.updateCompany(data);
+                });
+            },
+
+            NoPass: function () {
+                $.post("@Url.Action("Pass")", {
+                    State: "NoPass", UserID: "@Model.UserID"
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+        }
+        ko.applyBindings(viewModel);
+
+        if ("@Model.CompanyStates" == "认证未通过") {
+            $("#page-inner1").hide();
+        }
+        if ("@Model.CompanyStates" == "认证已通过") {
+            $("#button").hide();
+        }
+        if ("@Model.CompanyStates" == "未认证") {
+            $("#page-inner1").hide();
+        }
+    });
+</script>        

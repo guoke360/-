@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>货架安装平台登录</title>
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/buttom.css" rel="stylesheet" />
+    <link href="~/Content/Login.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="login">
+        <h2 style="font-size:46px;">货架安装平台<span style="font-size:28px;">登录</span></h2>
+        <div class="login-top">
+            <table class="logintable">
+                <tr>
+                    <td class="tdname">用户名：</td>
+                    <td class="tdtext">
+                        <input type="text" class="form-control" name="UserName" placeholder="请输入用户名..." data-bind="value:UserName">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdname">用户密码：</td>
+                    <td class="tdtext">
+                        <input type="password" class="form-control" name="UserPassword" placeholder="请输入密码..." data-bind="value:UserPassword">
+                    </td>
+                </tr>
+                <tr class="tabletr">
+                    <td colspan="2">
+                        <div class="inputsubmit">
+                            <input type="submit" value="登录" data-bind="click:LoginUser" class="button button-caution button-rounded button-pill">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="login-bottom">
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            UserName: ko.observable(""),
+            UserPassword: ko.observable(""),
+            LoginUser: function () {
+                $.post("@Url.Action("Login")", {
+                    UserName: this.UserName, UserPassword: this.UserPassword
+                }, function (data) {
+                    if (data.msg == "登陆成功！") {
+                        alert(data.msg);
+                        window.location.href = "@Url.Action("Person", "PersonalMag")";
+                    }
+                    else {
+                        viewModel.UserName("");
+                        viewModel.UserPassword("");
+                        alert(data.msg);
+                    }
+                });
+            }
+        }
+        ko.applyBindings(viewModel);
+    });
+</script> 

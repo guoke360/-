@@ -1,0 +1,419 @@
+﻿
+@{
+    ViewBag.Title = "SystemList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Table.css" rel="stylesheet" />
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-share"></i> 系统管理</a></li>
+</ol>
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            @*查询*@     <table border="0" class="search">
+                <thead>
+                    <tr>
+                        <td style="width:200px"></td>
+                        <td>用户名:</td>
+                        <td>
+                            <input type="text" style="margin-left:-30px; width:180px; height:30px" data-bind="value:UserNameSea" id="UserName" name="UsersName" />
+                        </td>
+                        <td>状态:</td>
+                        <td>
+                            <select style="width:180px; height:30px" id="UserState" name="UsersState" data-bind="value: SelectState">
+                                <option value="All">请选择</option>
+                                <option value="Able">启用</option>
+                                <option value="DisAble">未启用</option>
+                            </select>
+                        </td>
+                        <td><button type="submit" id="searchbutton" class="btn btn-danger" data-bind="click: search">查询</button></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="page-inners">
+    <div class="row">
+        <div class="col-md-12">
+            @*列表*@ <table border="1" class="tableC">
+                <thead class="tableFirst">
+                    <tr class="theadtr">
+                        <td style="text-align:center;">序号</td>
+                        <td style="text-align:center;">用户名</td>
+                        <td style="text-align:center;">用户状态</td>
+                        <td style="text-align:center;">权限类别</td>
+                        <td style="text-align:center;">操作</td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:User">
+                    <tr class="tbodytr">
+                        <td style="text-align:center;display:none" data-bind="text: UserID">1</td>
+                        <td style="text-align:center;" data-bind="text: NO">1</td>
+                        <td style="text-align:center;" data-bind="text: UserName">admin</td>
+                        <td style="text-align:center;" data-bind="text: UserState">启用</td>
+                        <td style="text-align:center;" data-bind="text: UserCategory">系统管理员</td>
+                        <td style="text-align:center;">
+                            <img src="../Image/edit.png" data-toggle="modal" data-target="#myModall" data-bind="click: $parent.detUser" />
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    @*分页*@
+                    <tr class="tableEnd">
+                        <td colspan="14">
+                            <ul class="pagination" style="text-align: right">
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                    <a href="javascript:void" data-bind="click: pagingf">首页</a>
+                                </li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                    <a href="javascript:void" data-bind="click: pagingup">上一页</a>
+                                </li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingnext">下一页</a></li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingl">末页</a></li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                    <a href="javascript:void">
+                                        <!--ko text:NewPage -->
+                                        <!--/ko-->
+                                        /<!--ko text:AllPage --><!--/ko-->页
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @*添加按钮*@ <table style="float:right; margin-right:80px; margin-top:20px;">
+                <tr>
+                    <td>
+                        <button data-toggle="modal" data-target="#myModal" class="btn btn-danger" style="height:35px;width:100px;">
+                            添加
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @*添加*@    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">
+                        <strong>添加用户</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered " id="dataTables-example" style="text-align:center;margin:auto;">
+                        <tbody>
+                            <tr class="odd gradeX">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户名:&nbsp</td>
+                                <td>
+                                    <input type="text" class="form-control" style="width: 60%;" id="UserName" name="UserName" data-bind="value:UserNames" maxlength="12" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
+                                </td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户密码:&nbsp</td>
+                                <td>
+                                    <input type="password" class="form-control" style="width: 60%;" id="UserPassword" name="UserPassword" data-bind="value:UserPasswords" maxlength="12">
+                                </td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户权限类别:&nbsp</td>
+                                <td style="text-align:left;line-height:30px;" id="UserCategorys">
+                                    <input type="radio" style="margin-left:10px;" name="UserCategory" value="Admin" onclick="document.getElementById('oth1').style.display ='none';" data-bind="checked:UserCategorys">系统管理员
+                                    <input type="radio" style="margin-left: 20px" name="UserCategory" value="InstallAdmin" onclick="document.getElementById('oth1').style.display ='';" data-bind="checked:UserCategorys">安装需求管理员
+
+                                </td>
+                            </tr>
+                            <tr class="odd gradeX" id="oth1" style="display:none">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户权限级别:&nbsp</td>
+                                <td style="text-align:left;line-height:30px;">
+                                    <input type="checkbox" name="Level" value="安装公司管理" style="margin-left:10px;" />安装公司管理
+                                    <input type="checkbox" name="Level" value="安装需求管理" style="margin-left:10px;" />安装需求管理
+                                    <input type="checkbox" name="Level" value="安装需求发布" style="margin-left:10px;" />安装需求发布
+                                    <input type="checkbox" name="Level" value="安装进度管理" style="margin-left:10px;" />安装进度管理
+                                </td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户状态:&nbsp</td>
+                                <td style="text-align:left;line-height:30px;" id="UserStates">
+                                    <input type="radio" name="Star" style="margin-left:10px;" value="Able" data-bind="checked:UserStatess">启用
+                                    <input type="radio" style="margin-left:20px" name="Star" value="DisAble" data-bind="checked:UserStatess">未启用
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-danger" value="添加" data-dismiss="modal" data-bind="click:addUser" />
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="关闭" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @*修改*@    <div class="modal fade" id="myModall" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">
+                        <strong>修改用户</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered " id="dataTables-example" style="text-align:center;margin:auto;">
+                        <tbody>
+                            <tr style="display: none;">
+                                <td>
+                                    <!--ko text:UserID -->
+                                    <!--/ko-->
+                                </td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户名:&nbsp</td>
+                                <td>
+                                    <input type="text" class="form-control" style="width: 60%;" disabled="disabled" id="UserName" name="UserName" data-bind="value:UserName">
+                                </td>
+                            </tr>
+                            @*<tr class="odd gradeX">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户密码:&nbsp</td>
+                                <td>
+                                    <input type="text" class="form-control" style="width: 60%;" id="UserPassword" name="UserPassword" data-bind="value:UserPassword">
+                                </td>
+                            </tr>*@
+                            <tr class="odd gradeX">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户权限类别:&nbsp</td>
+                                <td style="text-align:left;line-height:30px;">
+                                    <input type="radio" style="margin-left:10px;" name="UserCategory" onclick="document.getElementById('oth').style.display = 'none';" data-bind="checked: UserCategory" value="Admin">系统管理员
+                                    <input type="radio" style="margin-left: 20px" name="UserCategory" onclick="document.getElementById('oth').style.display = '';" data-bind="checked: UserCategory" value="InstallAdmin">安装需求管理员
+                                </td>
+                            </tr>
+                            <tr class="odd gradeX" id="oth" style="display:none">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户权限级别:&nbsp</td>
+                                <td style="text-align:left;line-height:30px;" data-bind="value:UserLevel">
+                                    <input type="checkbox" name="Fruit" value="安装公司管理" style="margin-left:10px;" id="checkbox1" />安装公司管理
+                                    <input type="checkbox" name="Fruit" value="安装需求管理" style="margin-left:10px;" id="checkbox2" />安装需求管理
+                                    <input type="checkbox" name="Fruit" value="安装需求发布" style="margin-left:10px;" id="checkbox3" />安装需求发布
+                                    <input type="checkbox" name="Fruit" value="安装进度管理" style="margin-left:10px;" id="checkbox4" />安装进度管理
+                                </td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td style="text-align:right;line-height:30px;"><a style="color: #ff0000">*</a>用户状态:&nbsp</td>
+                                <td style="text-align:left;line-height:30px;">
+                                    <input type="radio" style="margin-left:10px" name="UserState" value="Able" data-bind="checked:UserState">启用
+                                    <input type="radio" style="margin-left:20px" name="UserState" value="DisAble" data-bind="checked:UserState">未启用
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-danger" value="修改" data-dismiss="modal" data-bind="click:editUser" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            //Json主体函数
+            User: ko.observableArray(@Html.Raw(Model.list)),
+            //分页
+            AllPage: ko.observable(@Model.AllPage),
+            NowPage: ko.observable(@Model.NowPage),
+            NewPage: ko.observable(@Model.NewPage),
+            //搜索
+            SelectState: ko.observable(""),
+            UserNameSea: ko.observable(""),
+            //添加
+            UserNames: ko.observable(""),
+            UserPasswords: ko.observable(""),
+            UserCategorys: ko.observable(""),
+            UserLevels: ko.observable(),
+            UserStatess: ko.observable(""),
+            searchStatus: ko.observable(""),
+            //编辑
+            UserID: ko.observable(""),
+            UserName: ko.observable(""),
+            UserPassword: ko.observable(""),
+            UserCategory: ko.observable(""),
+            UserLevel: ko.observable(""),
+            UserState: ko.observable(""),
+            searchStatu: ko.observable(""),
+            //更新方法
+            updateUser: function (data) {
+                viewModel.User(data.Userlist);
+                SelectState: ko.observable("");
+                UserNameSea: ko.observable("");
+                viewModel.AllPage(data.AllPage);
+                viewModel.NewPage(data.NewPage);
+                viewModel.NowPage(data.NowPage);
+                if (data.msg != null) {
+                    $('#myModal').modal('hide');
+                    $('#myModall').modal('hide');
+                    alert(data.msg);
+                }
+            },  //上一页
+            pagingup: function () {
+                var NowPageN = viewModel.NowPage() - 1;
+                if (NowPageN <= 0) {
+                    NowPageN = 0;
+                }
+                $.post("@Url.Action("SystemList")", { NowPage: NowPageN, UsersName: this.UserNameSea, UsersState: this.SelectState }, function (data) {
+                    viewModel.updateUser(data);
+                });
+            },
+            //首页
+            pagingf: function () {
+                $.post("@Url.Action("SystemList")", { NowPage: 0, UsersName: this.UserNameSea, UsersState: this.SelectState }, function (data) {
+                    viewModel.updateUser(data);
+                });
+            },
+            //末页
+            pagingl: function () {
+                $.post("@Url.Action("SystemList")", { NowPage: viewModel.AllPage() == 0 ? 0 : viewModel.AllPage() - 1, UsersName: this.UserNameSea, UsersState: this.SelectState }, function (data) {
+                    viewModel.updateUser(data);
+                });
+            },
+            //下一页
+            pagingnext: function () {
+                var NowPageN = viewModel.NowPage() + 1;
+                if (NowPageN >= viewModel.AllPage()) {
+                    NowPageN = NowPageN - 1;
+                }
+                $.post("@Url.Action("SystemList")", { NowPage: NowPageN, UsersName: this.UserNameSea, UsersState: this.SelectState }, function (data) {
+                    viewModel.updateUser(data);
+                });
+            },
+            search: function () {
+                $.post("@Url.Action("SystemList")", { UsersName: this.UserNameSea, UsersState: this.SelectState }, function (data) {
+                    viewModel.User(data.Userlist);
+                });
+            },
+            addUser: function () {
+                obj = document.getElementsByName("Level");
+                check_val = [];
+                var searchStatus = "";
+                for (k in obj) {
+                    if (obj[k].checked)
+                        searchStatus += obj[k].value + ",";
+                }
+                viewModel.searchStatus(searchStatus);
+                $.post("@Url.Action("UserAdd")", {
+                    UserName: this.UserNames, UserPassword: this.UserPasswords, UserState: this.UserStatess, UserCategory: this.UserCategorys, UserLevel: this.searchStatus,
+                    UsersName: this.UserNameSea, UsersState: this.SelectState
+                }, function (data) {
+                    viewModel.updateUser(data);
+                    viewModel.UserNames("");
+                    viewModel.UserPasswords("");
+                    viewModel.UserCategorys("");
+                    viewModel.UserLevels("");
+                    viewModel.UserStatess("");
+                    document.getElementById('oth').style.display = '';
+                });
+            },
+            detUser: function (User) {
+                $.post("@Url.Action("DetailUser")", { UserID: User.UserID }, function (Result) {
+                    viewModel.UserID(User.UserID);
+                    viewModel.UserName(Result.UserName);
+                    viewModel.UserPassword(Result.UserPassword);
+                    viewModel.UserCategory(Result.UserCategorys);
+                    viewModel.UserState(Result.UserStates);
+                    if (Result.UserCategorys == "InstallAdmin") {
+                        document.getElementById('oth').style.display = '';
+                        if (Result.UserLevel[0] == "安装公司管理") {
+                            document.getElementById('checkbox1').checked = 'true';
+                        }
+                        else if (Result.UserLevel[0] == "安装需求管理") {
+                            document.getElementById('checkbox2').checked = 'true';
+                        }
+                        else if (Result.UserLevel[0] == "安装需求发布") {
+                            document.getElementById('checkbox3').checked = 'true';
+                        }
+                        else if (Result.UserLevel[0] == "安装进度管理") {
+                            document.getElementById('checkbox4').checked = 'true';
+                        }
+
+                        if (Result.UserLevel[1] == "安装公司管理") {
+                            document.getElementById('checkbox1').checked = 'true';
+                        }
+                        else if (Result.UserLevel[1] == "安装需求管理") {
+                            document.getElementById('checkbox2').checked = 'true';
+                        }
+                        else if (Result.UserLevel[1] == "安装需求发布") {
+                            document.getElementById('checkbox3').checked = 'true';
+                        }
+                        else if (Result.UserLevel[1] == "安装进度管理") {
+                            document.getElementById('checkbox4').checked = 'true';
+                        }
+
+
+                        if (Result.UserLevel[2] == "安装公司管理") {
+                            document.getElementById('checkbox1').checked = 'true';
+                        }
+                        else if (Result.UserLevel[2] == "安装需求管理") {
+                            document.getElementById('checkbox2').checked = 'true';
+                        }
+                        else if (Result.UserLevel[2] == "安装需求发布") {
+                            document.getElementById('checkbox3').checked = 'true';
+                        }
+                        else if (Result.UserLevel[2] == "安装进度管理") {
+                            document.getElementById('checkbox4').checked = 'true';
+                        }
+
+
+                        if (Result.UserLevel[3] == "安装公司管理") {
+                            document.getElementById('checkbox1').checked = 'true';
+                        }
+                        else if (Result.UserLevel[3] == "安装需求管理") {
+                            document.getElementById('checkbox2').checked = 'true';
+                        }
+                        else if (Result.UserLevel[3] == "安装需求发布") {
+                            document.getElementById('checkbox3').checked = 'true';
+                        }
+                        else if (Result.UserLevel[3] == "安装进度管理") {
+                            document.getElementById('checkbox4').checked = 'true';
+                        }
+                    }
+                    else {
+                        document.getElementById('oth').style.display = 'none';
+                    }
+                });
+            },
+            editUser: function () {
+                obj = document.getElementsByName("Fruit");
+                check_val = [];
+                var searchStatus = "";
+                for (k in obj) {
+                    if (obj[k].checked)
+                        searchStatus += obj[k].value + ",";
+                }
+                viewModel.searchStatu(searchStatus);
+                $.post("@Url.Action("UserEdit")", {
+                    UserName: this.UserName, UserPassword: this.UserPassword, UserState: this.UserState, UserCategory: this.UserCategory, UserLevel: this.searchStatu,
+                    UserID: this.UserID, UsersName: this.UserNameSea, UsersState: this.SelectState
+                }, function (data) {
+                    viewModel.updateUser(data);
+                    viewModel.UserName("");
+                    viewModel.UserPassword("");
+                    viewModel.UserCategory("");
+                    viewModel.UserLevel("");
+                    viewModel.UserStates("");
+                });
+            }
+        }
+        ko.applyBindings(viewModel);
+    });
+</script>

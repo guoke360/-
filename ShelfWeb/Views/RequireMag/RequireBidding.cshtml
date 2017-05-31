@@ -1,0 +1,261 @@
+﻿@model ShelfWeb.Models.VMRequire
+@{
+    ViewBag.Title = "RequireBidding";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<link href="~/Content/Table.css" rel="stylesheet" />
+<link href="~/Content/smd.css" rel="stylesheet" />
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-share"></i> 安装需求管理</a></li>
+    > 选择中标
+</ol>
+<div id="page-innera">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-line">基本信息</div>
+            <div>
+                <table class="table">
+                    <tr>
+                        <td class="td" style="line-height:35px;">货架类型</td>
+                        <td class="tds">
+                            <input class="form-control" style="width: 80%" disabled="disabled" value="@Model.InsShelftype" />
+                        </td>
+                        <td class="td" style="line-height:35px;">设计吨位</td>
+                        <td class="tds">
+                            <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsTonnage" />
+                            <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsTonUnit">
+                                <option value="吨">吨</option>
+                                <option value="千克">千克</option>
+                            </select>
+                        </td>
+                        <td class="td" style="line-height:35px;">安装地点</td>
+                        <td class="tds"><input class="form-control" style="width: 80%" disabled="disabled" value="@Model.Insplace" /></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style="line-height:35px;">开工日期</td>
+                        <td class="tds"><input class="form-control" style="width: 80%" disabled="disabled" value="@Model.InsStartDate" /></td>
+                        <td class="td" style="line-height:35px;">安装周期</td>
+                        <td class="tds">
+                            <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsCycle" />
+                            <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsCycleUnit">
+                                <option value="人*天">人*天</option>
+                                <option value="人*周">人*周</option>
+                            </select>
+                        </td>
+                        <td class="td" style="line-height:35px;">立柱高度</td>
+                        <td class="tds">
+                            <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsHeight" />
+                            <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsHghUnit">
+                                <option value="米">米</option>
+                                <option value="千米">千米</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td" style="line-height:35px;">横梁高度</td>
+                        <td class="tds">
+                            <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsBeamHgh" />
+                            <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsHghUnit">
+                                <option value="米">米</option>
+                                <option value="千米">千米</option>
+                            </select>
+                        </td>
+                        <td class="td" style="line-height:35px;">阁楼层数</td>
+                        <td class="tds">
+                            <input class="form-control" style="width: 72%;float:left" disabled="disabled" value="@Model.InsBeamHgh" />
+                            <label style="float:left;font-weight:normal;line-height:35px;margin-left:5px;">层</label>
+                        </td>
+                        <td class="td" style="line-height:35px;">货叉伸位</td>
+                        <td class="tds">
+                            <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsForkExtension" />
+                            <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsStretchCom">
+                                <option value="米">米</option>
+                                <option value="千米">千米</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td" style="line-height:35px;">安装价格</td>
+                        <td class="tds">
+                            <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsMoney" />
+                            <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsMoneyCom">
+                                <option value="元/吨">元/吨</option>
+                                <option value="元/千克">元/千克</option>
+                            </select>
+                        </td>
+                        <td class="td" style="line-height:35px;">联系人</td>
+                        <td class="tds"><input class="form-control" style="width: 80%" disabled="disabled" value="@Model.InsName" /></td>
+                        <td class="td" style="line-height:35px;">手机</td>
+                        <td class="tds"><input class="form-control" style="width: 80%" disabled="disabled" value="@Model.InsPhone" /></td>
+                    </tr>
+                    <tr class="tr">
+                        <td class="td" style="line-height:35px;">备注</td>
+                        <td colspan="5"><input class="form-control" style="width:965px;height:100px;" disabled="disabled" value="@Model.InsRemark" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="page-inneraa">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-line">报价信息</div>
+            <table border="1" class="tableC" onclick="javascript:GoSel(event);">
+                <thead class="tableFirst">
+                    <tr class="theadtr">
+                        <td rowspan="2">序号</td>
+                        <td rowspan="2">公司名称</td>
+                        <td rowspan="2">联系人</td>
+                        <td rowspan="2">电话</td>
+                        <td rowspan="2">报价</td>
+                        <td rowspan="2">是否中标</td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: offer">
+                    <tr class="tbodytr" @*onclick="c1(this);"*@>
+                        <td data-bind="text: OfferID" style="display:none"></td>
+                        <td data-bind="text: No"></td>
+                        <td data-bind="text: CompanyName"></td>
+                        <td data-bind="text: InsName"></td>
+                        <td data-bind="text: InsPhone"></td>
+                        <td data-bind="text: OfferMoney"></td>
+                        <td data-bind="text: OfferStates"></td>
+                        <td data-bind="text: InstallID" style="display:none"></td>
+                    </tr>
+                </tbody>
+                <tr class="tableEnd">
+                    <td colspan="14">
+                        <ul class="pagination" id="textright">
+                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                <a href="javascript:void" data-bind="click: pagingf">首页</a>
+                            </li>
+                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                <a href="javascript:void" data-bind="click: pagingup">上一页</a>
+                            </li>
+                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingnext">下一页</a></li>
+                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingl">末页</a></li>
+                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                <a href="javascript:void">
+                                    <!--ko text:NewPage -->
+                                    <!--/ko-->
+                                    /<!--ko text:AllPage --><!--/ko-->页
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <div class="buttons">
+                <button class="btn btn-danger" data-bind="click:Biding">中标</button>
+                <a href="@Url.Action("RequireList","RequireMag", new { area = (String)null })" class="btn btn-default">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var selTr = null;
+    function GoSel(evt)
+    {
+       var el = evt.srcElement?evt.srcElement:evt.target;
+       if(el.tagName.toUpperCase() !="TD") return;
+       var tr = el.parentNode;
+       tr.style.backgroundColor = "#CC6666";
+       if(selTr !=null)
+       {
+           selTr.style.backgroundColor ="white";
+       }
+       selTr = tr;
+    }
+
+    //var selectedTr = null;
+    //function c1(obj) {
+    //    obj.style.backgroundColor = '#CC6666'; //把点到的那一行变希望的颜色;
+    //    if (selectedTr != null)
+    //        selectedTr.style.removeAttribute("backgroundColor");
+    //    if (selectedTr == obj)
+    //        selectedTr = null;//加上此句，以控制点击变白，再点击反灰
+    //    else
+    //        selectedTr = obj;
+    //}
+    $(function () {
+        var viewModel = {
+            //json主体数据集合
+            offer: ko.observableArray(@Html.Raw(Model.offerlist)),
+            //分页
+            AllPage: ko.observable(@Model.AllPage),
+            NowPage: ko.observable(@Model.NowPage),
+            NewPage: ko.observable(@Model.NewPage),
+            InstallID: ko.observable("@Model.InstallID"),
+            //更新方法
+            updateCompany: function (data) {
+                viewModel.offer(data.OfferList);
+                viewModel.AllPage(data.AllPage);
+                viewModel.NewPage(data.NewPage);
+                viewModel.NowPage(data.NowPage);
+            },
+            //上一页
+            pagingup: function () {
+                var NowPageN = viewModel.NowPage() - 1;
+                if (NowPageN <= 0) {
+                    NowPageN = 0;
+                }
+                $.post("@Url.Action("SearchPost")", { NowPage: NowPageN, OfferID: OfferID }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+            //首页
+            pagingf: function () {
+                $.post("@Url.Action("SearchPost")", {
+                    NowPage: 0, OfferID: OfferID
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+            //末页
+            pagingl: function () {
+                $.post("@Url.Action("SearchPost")", {
+                    NowPage: viewModel.AllPage() == 0 ? 0 : viewModel.AllPage() - 1, OfferID: OfferID
+                }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+            //下一页
+            pagingnext: function () {
+                var NowPageN = viewModel.NowPage() + 1;
+                if (NowPageN >= viewModel.AllPage()) {
+                    NowPageN = NowPageN - 1;
+                }
+                $.post("@Url.Action("SearchPost")", { NowPage: NowPageN, ActTitle: this.ptitle, OfferID: OfferID }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+            Biding: function () {
+                if (selTr != null) {
+                    var OfferID = selTr.cells[0].innerHTML;
+                    var InstallID = selTr.cells[6].innerHTML;
+                    //var OfferID = selectedTr.cells[0].childNodes[0].value;
+                } else {
+                    alert("请选择一行");
+                    return;
+                }
+                $.post("@Url.Action("Biding")", {
+                    OfferID: OfferID, InstallID: InstallID
+                }, function (data) {
+                    alert(data.msg);
+                    viewModel.updateCompany(data);
+                });
+            }
+        };
+        ko.applyBindings(viewModel);
+    });
+</script>
+@*<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            InstallID: ko.observable("@Model.InstallID")
+        }
+        ko.applyBindings(viewModel);
+    });
+</script>*@

@@ -1,0 +1,158 @@
+﻿@{
+    ViewBag.Title = "RequireList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<link href="~/Content/Table.css" rel="stylesheet" />
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-share"></i> 安装需求管理</a></li>
+    > 需求管理
+</ol>
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <table border="0" class="search">
+                <thead>
+                    <tr>
+                        <td class="searchName">货架类型:</td>
+                        <td class="searchInput"><input type="text" class="searchinput" name="InsShelftypeName" data-bind="value:InsShelftypeNameSea"></td>
+                        <td class="searchButton"><button type="submit" id="searchbutton" class="btn btn-danger" data-bind="click: search">查询</button></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="page-inners">
+    <div class="row">
+        <div class="col-md-12">
+            <table border="1" class="tableC">
+                <thead class="tableFirst">
+                    <tr class="theadtr">
+                        <td rowspan="2">编号</td>
+                        <td rowspan="2">货架类型</td>
+                        <td rowspan="2">设计吨位</td>
+                        <td rowspan="2">安装价格</td>
+                        <td rowspan="2">安装地点</td>
+                        <td rowspan="2">开工日期</td>
+                        <td colspan="5">货架结构</td>
+                        <td rowspan="2">中标单位</td>
+                        <td rowspan="2">工程完结性</td>
+                        <td rowspan="2" colspan="2">操作</td>
+                    </tr>
+                    <tr class="theadtr">
+                        <td>安装周期</td>
+                        <td>立柱高度</td>
+                        <td>横梁层高</td>
+                        <td>阁楼层数</td>
+                        <td>货叉伸拉</td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: Install">
+                    <tr class="tbodytr">
+                        <td data-bind="text: InstallID" style="display:none"></td>
+                        <td data-bind="text: No"></td>
+                        <td data-bind="text: InsShelftype"></td>
+                        <td data-bind="text: InsTonnage"></td>
+                        <td data-bind="text: InsMoney"></td>
+                        <td data-bind="text: Insplace"></td>
+                        <td data-bind="text: InsStartDate"></td>
+                        <td data-bind="text: InsCycle"></td>
+                        <td data-bind="text: InsHeight"></td>
+                        <td data-bind="text: InsBeamHgh"></td>
+                        <td data-bind="text: InsAtticLayer"></td>
+                        <td data-bind="text: InsForkExtension"></td>
+                        <td data-bind="text: InsState"></td>
+                        <td data-bind="text: InsProjectState"></td>
+                        <td>
+                            <div data-bind="if: State"> <a data-bind="attr:{ href:Pass}" style="color:#fff;text-decoration:none;" class="btn btn-danger">审核</a></div> 
+                            <div data-bind="if: Statef"><a data-bind="attr:{ href:Look}" style="color:#fff;text-decoration:none;" class="btn btn-danger">查看</a></div> </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr class="tableEnd">
+                        <td colspan="15">
+                            <ul class="pagination" style="text-align: right">
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingf">首页</a></li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingup">上一页</a></li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingnext">下一页</a></li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingl">末页</a></li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                    <a href="javascript:void">
+                                        <!--ko text:NewPage -->
+                                        <!--/ko-->
+                                        /<!--ko text:AllPage --><!--/ko-->页
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            //json主体数据集合
+            Install: ko.observableArray(@Html.Raw(Model.list)),
+            //分页
+            AllPage: ko.observable(@Model.AllPage),
+            NowPage: ko.observable(@Model.NowPage),
+            NewPage: ko.observable(@Model.NewPage),
+
+            //搜索
+            InsShelftypeNameSea: ko.observable(""),
+
+            //更新方法
+            updateInstall: function (data) {
+                viewModel.Install(data.Installlist);
+                viewModel.InsShelftypeNameSea(data.InsShelftypeName);
+                viewModel.AllPage(data.AllPage);
+                viewModel.NewPage(data.NewPage);
+                viewModel.NowPage(data.NowPage);
+            },
+            //上一页
+            pagingup: function () {
+                var NowPageN = viewModel.NowPage() - 1;
+                if (NowPageN <= 0) {
+                    NowPageN = 0;
+                }
+                $.post("@Url.Action("RequiresList")", { NowPage: NowPageN, InsShelftypeName: this.InsShelftypeNameSea }, function (data) {
+                    viewModel.updateInstall(data);
+                });
+            },
+            //首页
+            pagingf: function () {
+                $.post("@Url.Action("RequiresList")", { NowPage: 0, InsShelftypeName: this.InsShelftypeNameSea }, function (data) {
+                    viewModel.updateInstall(data);
+                });
+            },
+            //末页
+            pagingl: function () {
+                $.post("@Url.Action("RequiresList")", { NowPage: viewModel.AllPage() == 0 ? 0 : viewModel.AllPage() - 1, InsShelftypeName: this.InsShelftypeNameSea }, function (data) {
+                    viewModel.updateInstall(data);
+                });
+            },
+            //下一页
+            pagingnext: function () {
+                var NowPageN = viewModel.NowPage() + 1;
+                if (NowPageN >= viewModel.AllPage()) {
+                    NowPageN = NowPageN - 1;
+                }
+                $.post("@Url.Action("RequiresList")", { NowPage: NowPageN, InsShelftypeName: this.InsShelftypeNameSea }, function (data) {
+                    viewModel.updateInstall(data);
+                });
+            },
+            search: function () {
+                $.post("@Url.Action("RequiresList")", { InsShelftypeName: this.InsShelftypeNameSea },
+                    function (data) {
+                        viewModel.updateInstall(data);
+                    });
+            }
+        };
+        ko.applyBindings(viewModel);
+    });
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

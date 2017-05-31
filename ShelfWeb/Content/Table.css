@@ -1,0 +1,131 @@
+﻿.search {
+    margin-top: 24px;
+    margin-left: 8%;
+    width: 90%;
+}
+
+.searchName {
+    width: 10%;
+}
+
+.searchInput {
+    width: 70%;
+}
+
+.searchinput {
+    width: 90%;
+}
+
+.searchButton {
+    width: 20%;
+}
+
+#searchbutton {
+    text-align: center;
+    width: 80px;
+}
+
+.tableC {
+    margin-top: 24px;
+    margin-left: 5%;
+    width: 90%;
+    border: 1px solid #aeadad;
+}
+
+.tableFirst {
+    background-color: #f5f6fa;
+}
+
+.theadtr {
+    text-align: center;
+    height:40px;
+    font-weight:bold;
+}
+
+.tbodytr {
+    text-align: center;
+    height: 40px;
+}
+
+#tablebutton {
+    text-align: left;
+}
+
+.tableEnd {
+    text-align: center;
+    height: 30px;
+    background-color: #f5f6fa;
+}
+
+#textright {
+    text-align: right
+}
+
+.com-info {
+    margin-top: 10px;
+    margin-left:1%;
+    width: 90%;
+}
+
+.com-td {
+    float:left;
+    font-size: 15px;
+    width: 75px;
+}
+
+.com-td1 {
+    float:left;
+    font-size: 15px;
+    width: 150px;
+}
+
+.com-td2 {
+    float:left;
+    font-size: 15px;
+    width: 80px;
+}
+
+.com-td3 {
+    float:left;
+    font-size: 15px;
+    width: 100px;
+}
+
+.com-td4 {
+    float:left;
+    font-size: 15px;
+    width: 110px;
+}
+
+.com-td5 {
+    float:left;
+    font-size: 15px;
+    width: 60px;
+}
+
+.com-td6 {
+    float:left;
+    font-size: 15px;
+    width: 170px;
+}
+
+.com-td7 {
+    float:left;
+    margin-bottom:145px;
+    width:110px;
+    font-weight:bold;
+}
+
+.com-td8{
+    float:left;
+    width:220px;
+}
+
+.com-td9{
+    float:left;
+    margin-top:154px;
+}
+
+.company_searchinput {
+    width:178px;
+}

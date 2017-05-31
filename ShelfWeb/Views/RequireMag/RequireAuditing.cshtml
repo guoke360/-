@@ -1,0 +1,136 @@
+﻿@model ShelfWeb.Models.VMRequire
+@{
+    ViewBag.Title = "RequireAuditing";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<link href="~/Content/smd.css" rel="stylesheet" />
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-share"></i> 安装需求管理</a></li>
+    > 需求审核
+</ol>
+<div id="page-inners">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="page-head-line">基本信息</div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr style="display: none;">
+                            <td>
+                                <!--ko text:InstallID -->
+                                <!--/ko-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td" style="line-height:35px;">货架类型</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 80%" disabled="disabled" value="@Model.InsShelftype" />
+                            </td>
+                            <td class="td" style="line-height:35px;">设计吨位</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsTonnage" />
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsTonUnit">
+                                    <option value="吨">吨</option>
+                                    <option value="千克">千克</option>
+                                </select>
+                            </td>
+                            <td class="td" style="line-height:35px;">安装地点</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" disabled="disabled" value="@Model.Insplace" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td" style="line-height:35px;">开工日期</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" disabled="disabled" value="@Model.InsStartDate" /></td>
+                            <td class="td" style="line-height:35px;">安装周期</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsCycle" />
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsCycleUnit">
+                                    <option value="人*天">人*天</option>
+                                    <option value="人*周">人*周</option>
+                                </select>
+                            </td>
+                            <td class="td" style="line-height:35px;">立柱高度</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsHeight" />
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsHghUnit">
+                                    <option value="米">米</option>
+                                    <option value="千米">千米</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td" style="line-height:35px;">横梁高度</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsBeamHgh" />
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsHghUnit">
+                                    <option value="米">米</option>
+                                    <option value="千米">千米</option>
+                                </select>
+                            </td>
+                            <td class="td" style="line-height:35px;">阁楼层数</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 72%;float:left" disabled="disabled" value="@Model.InsBeamHgh" />
+                                <label style="float:left;font-weight:normal;line-height:35px;margin-left:5px;">层</label>
+                            </td>
+                            <td class="td" style="line-height:35px;">货叉伸位</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsForkExtension" />
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsStretchCom">
+                                    <option value="米">米</option>
+                                    <option value="千米">千米</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td" style="line-height:35px;">安装价格</td>
+                            <td class="tds">
+                                <input class="form-control" style="width: 40%;float:left;" disabled="disabled" value="@Model.InsMoney" />
+                                <select class="form-control" style="width:39%;float:left;margin-left:5px;" disabled="disabled" value="@Model.InsMoneyCom">
+                                    <option value="元/吨">元/吨</option>
+                                    <option value="元/千克">元/千克</option>
+                                </select>
+                            </td>
+                            <td class="td" style="line-height:35px;">联系人</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" disabled="disabled" value="@Model.InsName" /></td>
+                            <td class="td" style="line-height:35px;">手机</td>
+                            <td class="tds"><input class="form-control" style="width: 80%" disabled="disabled" value="@Model.InsPhone" /></td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td" style="line-height:35px;">备注</td>
+                            <td colspan="5"><input class="form-control" style="width:965px;height:100px;" disabled="disabled" value="@Model.InsRemark" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="button">
+                    <button class="btn btn-danger" data-bind="click:RequireYes">审核通过</button>
+                    <button class="btn btn-danger" data-bind="click:RequireNo">审核失败</button>
+                    <a href="@Url.Action("RequireList","RequireMag", new { area = (String)null })" class="btn btn-default">取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            InstallID: ko.observable("@Model.InstallID"),
+            RequireYes: function () {
+                $.post("@Url.Action("RequireYesOrNo")", {
+                    InstallID: this.InstallID, InsProjectState: "Audited"
+                }, function (data) {
+                    alert(data.msg);
+                    window.location.href = data.url;
+                });
+            },
+            RequireNo: function () {
+                $.post("@Url.Action("RequireYesOrNo")", {
+                    InstallID: this.InstallID, InsProjectState: "AuditedFail"
+                }, function (data) {
+                    alert(data.msg);
+                    window.location.href = "RequireList"
+                });
+            },
+        }
+        ko.applyBindings(viewModel);
+    });
+</script>

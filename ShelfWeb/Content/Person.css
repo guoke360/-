@@ -1,0 +1,32 @@
+﻿.all {
+    margin: 0 auto;
+    width: 600px;
+    height: 300px;
+    margin-top: 100px;
+}
+
+.tdname {
+    text-align: right;
+    height: 50px;
+}
+
+.tdinput {
+    text-align: left;
+}
+
+.trstyle {
+    text-align: right;
+    height: 150px;
+}
+
+.submitstyle {
+    margin-top: 30px;
+}
+
+.inputstyle {
+    width: 500px;
+}
+
+.inputspecialstyle {
+    border: none;
+}

@@ -1,0 +1,158 @@
+﻿@{
+    ViewBag.Title = "CompanyList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Table.css" rel="stylesheet" />
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("CompanyList","CompanyMag", new { area = (String)null })"><i class="fa fa-share"></i> 安装公司管理</a></li>
+</ol>
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- 查询 -->
+            <table border="0" class="search">
+                <thead>
+                    <tr>
+                        <td class="searchName">公司名称:</td>
+                        <td class="company_searchinput">
+                            <input type="text" data-bind="value:CompanyNameSea" id="CompanyName" name="CompanyName" />
+                        </td>
+                        <td class="searchName">认证状态:</td>
+                        <td class="company_searchinput">
+                            <select class="form-control" style="width:120px;" id="CompanyState" name="StatuString" data-bind="value: SelectState">
+                                <option value="All">请选择</option>
+                                <option value="NoAudited">未认证</option>
+                                <option value="Pass">认证已通过</option>
+                                <option value="NoPass">认证未通过</option>
+                            </select>
+                        </td>
+                        <td class="searchButton">
+                            <button type="submit" id="searchbutton" class="btn btn-danger" data-bind="click: search">查询</button>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="page-inners">
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- 安装公司管理 -->
+            <table border="1" class="tableC">
+                <thead class="tableFirst">
+                    <tr class="theadtr">
+                        <td style="text-align:center;">序号</td>
+                        <td style="text-align:center;">公司名称</td>
+                        <td style="text-align:center;">联系人</td>
+                        <td style="text-align:center;">联系方式</td>
+                        <td style="text-align:center;">认证状态</td>
+                        <td style="text-align:center;">操作</td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:Company">
+                    <tr class="tbodytr">
+                        <td style="text-align:center;display:none" data-bind="text: UserID"></td>
+                        <td style="text-align:center;" data-bind="text: NO"></td>
+                        <td style="text-align:center;" data-bind="text: CompanyName"></td>
+                        <td style="text-align:center;" data-bind="text: UserRealName"></td>
+                        <td style="text-align:center;" data-bind="text: UserPhone"></td>
+                        <td style="text-align:center;" data-bind="text: CompanyState"></td>
+                        <td style="text-align:center;">
+                            <a data-bind="attr:{ href:Look}" class="btn btn-danger">查看</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <!-- 分页 -->
+                    <tr class="tableEnd">
+                        <td colspan="14">
+                            <ul class="pagination" style="text-align: right">
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                    <a href="javascript:void" data-bind="click: pagingf">首页</a>
+                                </li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                    <a href="javascript:void" data-bind="click: pagingup">上一页</a>
+                                </li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingnext">下一页</a></li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"><a href="javascript:void" data-bind="click: pagingl">末页</a></li>
+                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0">
+                                    <a>
+                                        <!--ko text:NewPage -->
+                                        <!--/ko-->
+                                        /<!--ko text:AllPage --><!--/ko-->页
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var viewModel = {
+            //Json主体函数
+            Company: ko.observableArray(@Html.Raw(Model.list)),
+            //分页
+            AllPage: ko.observable(@Model.AllPage),
+            NowPage: ko.observable(@Model.NowPage),
+            NewPage: ko.observable(@Model.NewPage),
+            //搜索
+            SelectState: ko.observable(""),
+            CompanyNameSea: ko.observable(""),
+            //更新方法
+            updateCompany: function (data) {
+                viewModel.Company(data.CompanyList);
+                SelectState: ko.observable("");
+                CompanyNameSea: ko.observable("");
+                viewModel.AllPage(data.AllPage);
+                viewModel.NewPage(data.NewPage);
+                viewModel.NowPage(data.NowPage);
+            },
+            //上一页
+            pagingup: function () {
+                var NowPageN = viewModel.NowPage() - 1;
+                if (NowPageN <= 0) {
+                    NowPageN = 0;
+                }
+                $.post("@Url.Action("CompanyLists")", { NowPage: NowPageN, CompanyName: this.CompanyNameSea, StatuString: this.SelectState }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+            //首页
+            pagingf: function () {
+                $.post("@Url.Action("CompanyLists")", { NowPage: 0, CompanyName: this.CompanyNameSea, StatuString: this.SelectState }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+            //末页
+            pagingl: function () {
+                $.post("@Url.Action("CompanyLists")", { NowPage: viewModel.AllPage() == 0 ? 0 : viewModel.AllPage() - 1, CompanyName: this.CompanyNameSea, StatuString: this.SelectState }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+            //下一页
+            pagingnext: function () {
+                var NowPageN = viewModel.NowPage() + 1;
+                if (NowPageN >= viewModel.AllPage()) {
+                    NowPageN = NowPageN - 1;
+                }
+                $.post("@Url.Action("CompanyLists")", { NowPage: NowPageN, CompanyName: this.CompanyNameSea, StatuString: this.SelectState }, function (data) {
+                    viewModel.updateCompany(data);
+                });
+            },
+            search: function () {
+                $.post("@Url.Action("CompanyLists")", { CompanyName: this.CompanyNameSea, StatuString: this.SelectState }, function (data) {
+                    viewModel.Company(data.CompanyList);
+                });
+            }
+        }
+        ko.applyBindings(viewModel);
+    });
+</script>

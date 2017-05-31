@@ -1,0 +1,33 @@
+﻿.logintable {
+    width: 100%;
+    margin-left:10%;
+}
+
+.tdname {
+    text-align: right;
+    font-size: 15px;
+    font-family: '微软雅黑';
+    width: 20%;
+}
+
+.tdtext {
+    text-align: center;
+    width: 80%;
+}
+
+.tableh2 {
+    font-size: 46px;
+}
+
+.tablespan {
+    font-size: 28px;
+}
+
+.tabletr {
+    text-align: center;
+}
+
+.inputsubmit{
+    margin-top:25px;
+    margin-right:20%;
+}

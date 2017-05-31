@@ -1,0 +1,38 @@
+﻿body {
+}
+.page-head-line {
+	font-size: 23px;
+	text-transform: uppercase;
+	color: #000;
+	font-weight: 800;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #d9d6d6;
+	margin-bottom: 10px;
+    margin-top:10px;
+}
+.table {
+    border:1px solid #d9d6d6;
+    width:80%;
+    margin-left:10%;
+}
+.td {
+    width:8%;
+    text-align:right;
+}
+.tds {
+    width:15%;
+}
+.tr {
+    height:100px;
+}
+.button {
+   width:80%;
+   text-align:right;
+   margin:auto;
+}
+.buttons {
+   width:90%;
+   text-align:right;
+   margin:auto;
+   margin-top:10px;
+}
